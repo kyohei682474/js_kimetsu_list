@@ -2,6 +2,7 @@
 const API_BASE = 'https://ihatov08.github.io/kimetsu_api/api';
 
 //エンドポイントをラベリングする
+
 const ENDPOINT = { 
   all:        'all.json',
   hashira:    'hashira.json',
@@ -9,17 +10,8 @@ const ENDPOINT = {
   kisatsutai: 'kisatsutai.json',
 }
 
-const LABELS = {
-  all: '全キャラクター',
-  hashira: '柱',
-  oni: '鬼',
-  kisatsutai: '鬼殺隊',
-} 
-
-
-
 //DOMの取得
-const grid = document.getElementById('grid');
+const gridElement = document.getElementById('grid');
 const loading = document.getElementById('loading');
 const radioButtons = document.querySelectorAll('input[name="cat"]');
 
@@ -63,17 +55,57 @@ function createCharactorCard(charactor){
         <h3 class="name">${charactor.name}</h3>
         <p class="category">${charactor.category}</p>  
       </div>
-    </div>; 
+    </div> 
     `
 }
 
 //画面機表示作成する
-function displaychractors(charactors){
+function displaycharactors(charactors){
+  //空のデータの場合
   if(!charactors || charactors.length === 0) { 
-    grid.innerHTML = '<p>表示できる画像がありません</p>'
+    gridElement.innerHTML = '<p>表示できる画像がありません</p>'
     return;
   }
-
-
-
+  //データが存在している場合
+  const cardsHTML = charactors
+    .map(charactor => createCharactorCard(charactor))
+    .join('');
+  gridElement.innerHTML = cardsHTML;
 }
+
+//メイン処理、イベント設定
+
+//実際にカテゴリー切り替えとその処理を行う
+async function changeCategory(category){
+  try{
+    showLoading();
+    const charactors = await fetchByCat(category) 
+    await new Promise(resolve => setTimeout(resolve, 300));
+    displaycharactors(charactors);
+  } catch(error) { 
+    console.log('エラー', error);
+  } finally { 
+    hideLoading();
+  }
+}
+
+//ラジオボタンのイベント設定
+function setupEventListener(){
+  radioButtons.forEach(radio => {
+    radio.addEventListener('change', (event)=>{
+      if(event.target.checked) { 
+        console.log(`カテゴリーの変更:${event.target.value}`) //valueはHTMLで直接指定している
+        changeCategory(event.target.value);
+      } 
+    });
+  });
+}
+
+//アプリケーションの初期化を行う
+
+async function init() { 
+ setupEventListener();
+ await changeCategory('all'); 
+}
+
+document.addEventListener('DOMContentLoaded', init)
