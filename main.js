@@ -1,5 +1,5 @@
 import { fetchByCat } from'./api.js';
-import { showLoading, hideLoading, displayCharacters, setupEventListener } from './ui.js';
+import { showLoading, hideLoading, displayCharacters, setupCategoryChangeListener} from './ui.js';
 
 // メイン処理、イベント設定
 //実際にカテゴリー切り替えとその処理を行う
@@ -17,9 +17,8 @@ async function changeCategory(category){
 }
 
 //アプリケーションの初期化を行う
-
 async function init() { 
- setupEventListener(changeCategory);
+ setupCategoryChangeListener(changeCategory);
  await changeCategory('all'); 
  
 }

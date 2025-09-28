@@ -55,12 +55,12 @@ export function displayCharacters(characters){
 
 
 //ラジオボタンのイベント設定
-export function setupEventListener(){
+export function setupCategoryChangeListener(onCategoryChange){
   radioButtons.forEach(radio => {
     radio.addEventListener('change', (event)=>{
       if(event.target.checked) { 
         console.log(`カテゴリーの変更:${event.target.value}`) //valueはHTMLで直接指定している
-        changeCategory(event.target.value);
+        onCategoryChange(event.target.value);
       } 
     });
   });
