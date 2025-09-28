@@ -5,33 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kimetsu App</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
      <style>
-  /* 3列グリッド */
-  #grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 9px;
-    padding: 16px;
-  }
-  /* カードの見た目（最低限） */
-  .card { border: 1px solid #eee; border-radius: 10px; background: #fff; overflow: hidden; }
-  .thumb { width: 100%; aspect-ratio: 16/10; object-fit: cover; background: #f1f1f1; display: block; }
-  .body { padding: 10px; }
-  .name { margin: 0 0 6px; font-weight: 700; }
-
-  /* ローディング */
-  #loading {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(255,255,255,.7);
-    backdrop-filter: blur(2px);
-    display: none; /* 初期は隠す */
-    align-items: center; justify-content: center;
-    font: 16px/1.4 system-ui, sans-serif;
-    z-index: 10;
-  }
-  #loading.show { display: flex; }
+  
 </style>
 </head>  
 
